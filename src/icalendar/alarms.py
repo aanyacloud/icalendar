@@ -34,9 +34,14 @@ if TYPE_CHECKING:
 
 Parent = Union[Event, Todo]
 
-
 class AlarmTime:
-    """An alarm time with all the information."""
+    """Represent a computed alarm occurrence with its timing and state.
+
+    An AlarmTime instance combines an alarm component with its resolved
+    trigger time and additional state information such as acknowledgment
+    and snoozing. It is used to determine whether an alarm is currently
+    active or has already been dismissed.
+    """
 
     def __init__(
         self,
@@ -46,28 +51,7 @@ class AlarmTime:
         snoozed_until: Optional[datetime] = None,
         parent: Optional[Parent] = None,
     ):
-        """Create a new AlarmTime.
-
-        alarm
-            the Alarm component
-
-        trigger
-            a date or datetime at which to trigger the alarm
-
-        acknowledged_until
-            an optional datetime in UTC until when all alarms
-            have been acknowledged
-
-        snoozed_until
-            an optional datetime in UTC until which all alarms of
-            the same parent are snoozed
-
-        parent
-            the optional parent component the alarm refers to
-
-        local_tzinfo
-            the local timezone that events without tzinfo should have
-        """
+        """Create a new AlarmTime instance."""
         self._alarm = alarm
         self._parent = parent
         self._trigger = trigger
